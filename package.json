@@ -1,0 +1,25 @@
+{
+    "name": "node-red-contrib-pca9535",
+    "version": "2.0.0",
+    "description": "The basic Node-RED node for DI",
+    "dependencies": {
+        "i2c-bus": "^5.2.1",
+        "onoff": "^1.0.3"
+    },
+    "keywords": [
+        "node-red",
+        "GPIO",
+        "PCA9535",
+        "I2C"
+    ],
+    "author": {
+        "name": "Denis Max",
+        "email": "otrada@gmail.com"
+    },
+    "license": "MIT",
+    "node-red": {
+        "nodes": {
+            "PCA9535-gpio": "PCA9535-gpio.js"
+        }
+    }
+}

@@ -1,0 +1,134 @@
+<script type="text/x-red" data-template-name="DI CONTROLLER">
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name </label>
+      <input type="text" id="node-input-name" />
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-pin"><i class="fa fa-microchip"></i> Input Number </label>
+      <input type="number" id="node-input-pin" min=1 max=16 />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-busno"><i class="fa fa-random"></i> Bus (dev/i2c*) </label>
+    <input type="number" id="node-input-bus" min=0 max=7 />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-address"><i class="fa fa-address-card-o"></i> Bus Address </label>
+    <input type="text" id="node-input-address"/>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-gpioint"><i class="fa fa-address-card-o"></i> Gpio for interrupt </label>
+    <input type="text" id="node-input-gpioint" min=0 max=288/>
+  </div>
+
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType("DI CONTROLLER", {
+    category: "MY CONTROLLER",
+    color: "#f833ff",
+    icon: "inputs.png",
+    defaults: {
+      name: { value: "", required: false },
+      bus: {
+        value: 1, required: true,
+        validate: function (input) {
+          return input <= 15 && input >= 0
+        }
+      },
+      address: {
+        value: "0x20", required: true, validate: function (v) {
+          var n = parseInt(v, 16);
+          return n >= 32 && n <= 39
+        }
+      },
+      pin: {
+        value: undefined, required: true, validate: function (input) {
+          return input <= 16 && input >= 1
+        }
+      }, 
+        gpioint: {
+            value: 141, required: true, validate: function (input) {
+                return input <= 288 && input >= 0
+            }
+        }
+    },
+    outputs: 24,
+    inputs: 0,
+    label: function () {
+      return this.name || "DI";
+    },
+    labelStyle: function () { return this.name ? "node_label_italic" : ""; },
+    outputLabels: ["DI1","DI2","DI3","DI4","DI5","DI6","DI7","DI8","DI9","DI10","DI11","DI12","DI13","DI14","DI15","DI16","DI17","DI18","DI19","DI20","DI21","DI22","DI23","DI24"],
+    inputLabels: ["Trigger"]
+  });
+</script>
+
+<script type="text/x-red" data-help-name="DI & DOUT Controller">
+    <p> The basic Node-RED node for GPIO Expander PCA9535 </p>
+</script>
+
+<script type="text/x-red" data-template-name="DOUT CONTROLLER">
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name </label>
+      <input type="text" id="node-input-name" />
+  </div>
+
+  <div class="form-row">
+      <label for="node-input-pin"><i class="fa fa-microchip"></i> Output Number </label>
+      <input type="number" id="node-input-pin" min=1 max=16 />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-busno"><i class="fa fa-random"></i> Bus (dev/i2c*) </label>
+    <input type="number" id="node-input-bus" min=0 max=7 />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-address"><i class="fa fa-address-card-o"></i> Bus Address </label>
+    <input type="text" id="node-input-address"/>
+  </div>
+
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType("DOUT CONTROLLER", {
+    category: "MY CONTROLLER",
+    color: "#ffb10a",
+    icon: "outputs.png",
+    defaults: {
+      name: { value: "", required: false },
+      bus: {
+        value: 1, required: true, validate: function (input) {
+          return input <= 7 && input >= 0
+        }
+      },
+      address: {
+        value: "0x21", required: true, validate: function (v) {
+          var n = parseInt(v, 16);
+          return n >= 32 && n <= 39
+        }
+      },
+      pin: {
+        value: undefined, required: true, validate: function (input) {
+          return input <= 16 && input >= 1
+        }
+      }
+    },
+    outputs: 0,
+    inputs: 1,
+    label: function () {
+      return this.name || (this.pin ? "DOUT" + this.pin : "DOUT");
+    },
+    labelStyle: function () { return this.name ? "node_label_italic" : ""; },
+    outputLabels: ["DOUT"],
+    inputLabels: ["Trigger"]
+  });
+</script>
+
+<script type="text/x-red" data-help-name="DI & DOUT Controller">
+    <p> The basic Node-RED node for GPIO Expander PCA9535 </p>
+</script>
